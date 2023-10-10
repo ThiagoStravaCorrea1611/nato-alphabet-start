@@ -8,17 +8,7 @@ PATH_NATO_ALPHABET = "nato_phonetic_alphabet.csv"
 df_nato_phonetic_alphabet = pd.read_csv(PATH_NATO_ALPHABET)
 
 # Nato phonetic alphabet dictionary
-dict_nato_phonetic_alphabet = {}
-for (index, row) in df_nato_phonetic_alphabet.iterrows():
-    dict_nato_phonetic_alphabet[row["letter"]] = row["code"]
-
-# Function that maps string in phonetic alphabet
-def phonetic_alphabet_translation(word:str):
-    translated_list = []
-    for l in word:
-        translated_list.append(dict_nato_phonetic_alphabet[l])
-    
-    return translated_list
+dict_nato_phonetic_alphabet = {row["letter"]:row["code"] for (index, row) in df_nato_phonetic_alphabet.iterrows()}
 
 # While loop of app
 translator_on = True
@@ -32,6 +22,6 @@ while translator_on:
         break
     
     # Translate user input to phonetic alphabet
-    user_input_translated = phonetic_alphabet_translation(user_input)
+    user_input_translated = [dict_nato_phonetic_alphabet[l] for l in user_input]
     
     print("-".join(user_input_translated))
