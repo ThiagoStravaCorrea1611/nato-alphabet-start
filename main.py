@@ -1,27 +1,37 @@
-student_dict = {
-    "student": ["Angela", "James", "Lily"], 
-    "score": [56, 76, 98]
-}
+# Import libraries
+import pandas as pd
 
-#Looping through dictionaries:
-for (key, value) in student_dict.items():
-    #Access key and value
-    pass
+# Parameters
+PATH_NATO_ALPHABET = "nato_phonetic_alphabet.csv"
 
-import pandas
-student_data_frame = pandas.DataFrame(student_dict)
+# Open csv with phonetic alphabet
+df_nato_phonetic_alphabet = pd.read_csv(PATH_NATO_ALPHABET)
 
-#Loop through rows of a data frame
-for (index, row) in student_data_frame.iterrows():
-    #Access index and row
-    #Access row.student or row.score
-    pass
+# Nato phonetic alphabet dictionary
+dict_nato_phonetic_alphabet = {}
+for (index, row) in df_nato_phonetic_alphabet.iterrows():
+    dict_nato_phonetic_alphabet[row["letter"]] = row["code"]
 
-# Keyword Method with iterrows()
-# {new_key:new_value for (index, row) in df.iterrows()}
+# Function that maps string in phonetic alphabet
+def phonetic_alphabet_translation(word:str):
+    translated_list = []
+    for l in word:
+        translated_list.append(dict_nato_phonetic_alphabet[l])
+    
+    return translated_list
 
-#TODO 1. Create a dictionary in this format:
-{"A": "Alfa", "B": "Bravo"}
-
-#TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-
+# While loop of app
+translator_on = True
+while translator_on:
+    # Ask for user input
+    user_input = input("A word to be translated: ").upper()
+    
+    # Check if it is time to quit
+    if user_input == "EXIT":
+        translator_on = False
+        break
+    
+    # Translate user input to phonetic alphabet
+    user_input_translated = phonetic_alphabet_translation(user_input)
+    
+    print("-".join(user_input_translated))
