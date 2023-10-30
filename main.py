@@ -22,6 +22,11 @@ while translator_on:
         break
     
     # Translate user input to phonetic alphabet
-    user_input_translated = [dict_nato_phonetic_alphabet[l] for l in user_input]
+    try:
+        user_input_translated = [dict_nato_phonetic_alphabet[l] for l in user_input]
+    except KeyError:
+        print("Sorry, only letters in the alphabet please.")
+    else:
+        print("-".join(user_input_translated))
     
-    print("-".join(user_input_translated))
+    
